@@ -4,35 +4,35 @@ on:
   workflow_dispatch:
     inputs:
       action:
-        description: 'CloudFormation action to perform'
+        description: "CloudFormation action to perform"
         required: true
-        default: 'deploy'
+        default: "deploy"
         type: choice
         options:
           - deploy
           - destroy
 
       StackName:
-        description: 'Enter your CloudFormation Stack Name'
+        description: "Enter your CloudFormation Stack Name"
         required: true
-        default: 'project-stack'
+        default: "project-stack"
         type: string
-      
+
       BucketName:
-        description: 'Enter your Bucket Name'
+        description: "Enter your Bucket Name"
         required: true
         type: string
 
       LambdaRuntime:
-        description: 'Enter your Lambda Runtime'
+        description: "Enter your Lambda Runtime"
         required: true
-        default: 'nodejs20.x'
+        default: "nodejs20.x"
         type: string
 
       LambdaHandler:
-        description: 'Enter your Lambda Handler'
+        description: "Enter your Lambda Handler"
         required: true
-        default: 'index.handler'
+        default: "index.handler"
         type: string
 
 permissions:
@@ -87,7 +87,7 @@ jobs:
         if: ${{ github.event.inputs.action == 'destroy' }}
         run: |
           aws cloudformation delete-stack \
-            --stack-name "${{ env.STACK_NAME }}"
+            --stack-name "${{ github.event.inputs.StackName }}"
 
           echo "Waiting for stack deletion..."
 
